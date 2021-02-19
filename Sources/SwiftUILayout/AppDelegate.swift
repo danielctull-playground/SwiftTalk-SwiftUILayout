@@ -13,8 +13,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
-        let content = ContentView(view: UI.Ellipse().frame(width: 100, height: 50))
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        let content = UI.Ellipse()
+            .frame(width: 100, height: 50)
+            .border(.blue, width: 20)
 
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
                           styleMask: [.closable,
@@ -25,7 +26,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                           backing: .buffered,
                           defer: false)
         window?.center()
-        window?.contentView = NSHostingView(rootView: content)
+        window?.contentView = NSHostingView(rootView: ContentView(view: content))
         window?.makeKeyAndOrderFront(nil)
         window?.delegate = self
         window?.titleVisibility = .hidden
