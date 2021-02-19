@@ -1,6 +1,7 @@
 
 import AppKit
 import SwiftUI
+import UI
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
@@ -12,7 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
-        let content = ContentView()
+        let content = ContentView(view: UI.Ellipse().frame(width: 100, height: 50))
 //            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),

@@ -1,11 +1,29 @@
 
 import AppKit
+import SwiftUI
 import UI
 
-struct ContentView: View {
+struct ContentView<View: UI.View>: SwiftUI.View {
 
-    var body: some View {
-        Ellipse()
-            .frame(width: 200, height: 100)
+    let view: View
+    @State var opacity: Double = 0.5
+
+    var body: some SwiftUI.View {
+        VStack {
+            ZStack  {
+                HostingView(content: view)
+                    .opacity(1-opacity)
+
+                view.swiftUI
+                    .opacity(opacity)
+            }
+            Slider(value: $opacity,
+                   in: 0...1,
+                   minimumValueLabel: Text("UI"),
+                   maximumValueLabel: Text("SwiftUI"),
+                   label: EmptyView.init)
+                .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

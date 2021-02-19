@@ -34,3 +34,13 @@ extension NSHostingView where Content == SwiftUI.Image {
         self.init(rootView: image)
     }
 }
+
+public struct HostingView<Content: View>: SwiftUI.View {
+    public let content: Content
+    public init(content: Content) {
+        self.content = content
+    }
+    public var body: some SwiftUI.View {
+        SwiftUI.Image(nsImage: NSImage(data: render(view: content))!)
+    }
+}
