@@ -11,10 +11,11 @@ struct ContentView<View: UI.View>: SwiftUI.View {
     var body: some SwiftUI.View {
         VStack {
             ZStack  {
-                HostingView(content: view)
+                HostingView(content: view, size: CGSize(width: 600, height: 400))
                     .opacity(1-opacity)
 
                 view.swiftUI
+                    .frame(width: 600, height: 400)
                     .opacity(opacity)
             }
             Slider(value: $opacity,
