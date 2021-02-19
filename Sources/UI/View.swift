@@ -1,3 +1,4 @@
+
 import AppKit
 import CoreGraphics
 
@@ -21,6 +22,14 @@ extension View {
             builtin.render(context: context, size: size)
         } else {
             body._render(context: context, size: size)
+        }
+    }
+
+    func _size(proposed: CGSize) -> CGSize {
+        if let builtin = self as? BuiltinView {
+            return builtin.size(proposed: proposed)
+        } else {
+            return body._size(proposed: proposed)
         }
     }
 }

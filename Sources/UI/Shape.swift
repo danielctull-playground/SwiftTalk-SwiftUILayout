@@ -1,12 +1,13 @@
+
 import AppKit
 import CoreGraphics
 
-protocol Shape: View {
+public protocol Shape: View {
     func path(in rect: CGRect) -> CGPath
 }
 
 extension Shape {
-    var body: some View {
+    public var body: some View {
         ShapeView(shape: self)
     }
 }
@@ -17,7 +18,8 @@ extension NSColor: View {
     }
 }
 
-struct ShapeView<S: Shape>: BuiltinView, View {
+public struct ShapeView<S: Shape>: BuiltinView, View {
+    public typealias Body = Never
     var shape: S
     var color: NSColor =  .red
 
@@ -28,16 +30,22 @@ struct ShapeView<S: Shape>: BuiltinView, View {
         context.fillPath()
         context.restoreGState()
     }
+
+    func size(proposed: CGSize) -> CGSize {
+        proposed
+    }
 }
 
-struct Rectangle: Shape {
-    func path(in rect: CGRect) -> CGPath {
+public struct Rectangle: Shape {
+    public init() {}
+    public func path(in rect: CGRect) -> CGPath {
         CGPath(rect: rect, transform: nil)
     }
 }
 
-struct Ellipse: Shape {
-    func path(in rect: CGRect) -> CGPath {
+public struct Ellipse: Shape {
+    public init() {}
+    public func path(in rect: CGRect) -> CGPath {
         CGPath(ellipseIn: rect, transform: nil)
     }
 }

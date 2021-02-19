@@ -21,7 +21,9 @@ extension CGContext {
 func render<V: UI.View>(view: V) -> Data {
     let size = CGSize(width: 600, height: 400)
     return CGContext.pdf(size: size) { context in
-        view._render(context: context, size: size)
+        view
+            .frame(width: size.width, height: size.height)
+            ._render(context: context, size: size)
     }
 }
 
@@ -32,4 +34,3 @@ extension NSHostingView where Content == SwiftUI.Image {
         self.init(rootView: image)
     }
 }
-
