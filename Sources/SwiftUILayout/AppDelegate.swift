@@ -10,8 +10,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
 
         let content = UI.Ellipse()
-            .frame(width: 100, height: 50)
-            .border(.blue, width: 20)
+            .frame(width: 200, height: 100)
+            .border(.blue, width: 2)
+            .frame(width: 300, height: 300, alignment: .topLeading)
+            .border(.yellow, width: 2)
 
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
                           styleMask: [.closable,

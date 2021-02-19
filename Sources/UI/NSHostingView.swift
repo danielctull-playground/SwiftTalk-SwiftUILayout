@@ -11,6 +11,7 @@ extension CGContext {
         var mediaBox = CGRect(origin: .zero, size: size)
         let pdfContext = CGContext(consumer: consumer, mediaBox: &mediaBox, nil)!
         pdfContext.beginPage(mediaBox: &mediaBox)
+        pdfContext.concatenate(CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: size.height))
         render(pdfContext)
         pdfContext.endPage()
         pdfContext.closePDF()
