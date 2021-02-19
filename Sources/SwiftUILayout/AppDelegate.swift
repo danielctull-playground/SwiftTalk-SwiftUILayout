@@ -3,13 +3,9 @@ import AppKit
 import SwiftUI
 import UI
 
-final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow?
-
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        true
-    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
@@ -28,11 +24,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         window?.center()
         window?.contentView = NSHostingView(rootView: ContentView(view: content))
         window?.makeKeyAndOrderFront(nil)
-        window?.delegate = self
         window?.titleVisibility = .hidden
         window?.titlebarAppearsTransparent = true
         window?.toolbar?.isVisible = true
-
-        NSApp.activate(ignoringOtherApps: true)
     }
 }
