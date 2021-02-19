@@ -1,7 +1,9 @@
 
 import CoreGraphics
+import SwiftUI
 
 struct FixedFrame<Content: View>: View, BuiltinView {
+
     let width: CGFloat?
     let height: CGFloat?
     let content: Content
@@ -20,6 +22,10 @@ struct FixedFrame<Content: View>: View, BuiltinView {
         let proposed = CGSize(width: width ?? proposed.width, height: height ?? proposed.height)
         let child = content._size(proposed: proposed)
         return CGSize(width: width ?? child.width, height: height ?? child.height)
+    }
+
+    var swiftUI: some SwiftUI.View {
+        content.swiftUI.frame(width: width, height: height)
     }
 }
 

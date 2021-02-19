@@ -1,10 +1,21 @@
 
 import AppKit
 import CoreGraphics
+import SwiftUI
 
 public protocol View {
     associatedtype Body: View
     var body: Body { get }
+
+    associatedtype SwiftUIView: SwiftUI.View
+    var swiftUI: SwiftUIView { get }
+}
+
+extension View {
+
+    public var swiftUI: some SwiftUI.View {
+        body.swiftUI
+    }
 }
 
 extension View where Body == Never {
