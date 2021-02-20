@@ -15,11 +15,7 @@ struct OverlayView<Content: View, Overlay: View>: View, BuiltinView {
         context.saveGState()
         content._render(context: context, size: size)
         let overlaySize = overlay._size(proposed: size)
-        let point = alignment.point(for: size)
-        let contentPoint = alignment.point(for: overlaySize)
-        let x = point.x - contentPoint.x
-        let y = point.y - contentPoint.y
-        context.translateBy(x: x, y: y)
+        context.translate(for: overlaySize, in: size, alignment: alignment)
         overlay._render(context: context, size: overlaySize)
         context.restoreGState()
     }

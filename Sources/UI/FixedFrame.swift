@@ -12,11 +12,7 @@ struct FixedFrame<Content: View>: View, BuiltinView {
     func render(context: CGContext, size: CGSize) {
         context.saveGState()
         let contentSize = content._size(proposed: size)
-        let point = alignment.point(for: size)
-        let contentPoint = alignment.point(for: contentSize)
-        let x = point.x - contentPoint.x
-        let y = point.y - contentPoint.y
-        context.translateBy(x: x, y: y)
+        context.translate(for: contentSize, in: size, alignment: alignment)
         content._render(context: context, size: contentSize)
         context.restoreGState()
     }

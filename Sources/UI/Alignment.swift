@@ -2,6 +2,17 @@
 import CoreGraphics
 import SwiftUI
 
+extension CGContext {
+
+    func translate(for child: CGSize, in parent: CGSize, alignment: Alignment) {
+        let parent = alignment.point(for: parent)
+        let child = alignment.point(for: child)
+        let x = parent.x - child.x
+        let y = parent.y - child.y
+        translateBy(x: x, y: y)
+    }
+}
+
 public struct Alignment {
     let horizontal: HorizontalAlignment
     let vertical: VerticalAlignment
