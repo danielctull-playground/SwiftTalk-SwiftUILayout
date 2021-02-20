@@ -1,19 +1,18 @@
 
 import SwiftUI
 
-public struct Text {
+public struct Text: BuiltinView, View {
+
+    public typealias Body = Never
+
     let text: String
     public init(_ text: String) {
         self.text = text
     }
-}
 
-extension Text: BuiltinView, View {
-
-    public typealias Body = Never
+    let font = NSFont.systemFont(ofSize: 16)
 
     var framesetter: CTFramesetter {
-        let font = NSFont.systemFont(ofSize: 13)
         let attributes = [NSAttributedString.Key.font: font]
         let string = NSAttributedString(string: text, attributes: attributes)
         return CTFramesetterCreateWithAttributedString(string)
@@ -34,6 +33,6 @@ extension Text: BuiltinView, View {
     }
 
     public var swiftUI: some SwiftUI.View {
-        SwiftUI.Text(text)
+        SwiftUI.Text(text).font(Font(font))
     }
 }
