@@ -9,13 +9,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
 
-        let content = UI.Ellipse()
-            .overlay(Text("Hello!"))
-            .frame(width: 200, height: 100)
-            .border(.blue, width: 2)
-            .frame(width: 300, height: 300, alignment: .topLeading)
-            .border(.yellow, width: 2)
-
         window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
                           styleMask: [.closable,
                                       .fullSizeContentView,
@@ -25,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                           backing: .buffered,
                           defer: false)
         window?.center()
-        window?.contentView = NSHostingView(rootView: ContentView(view: content))
+        window?.contentView = NSHostingView(rootView: ContentView())
         window?.makeKeyAndOrderFront(nil)
         window?.titleVisibility = .hidden
         window?.titlebarAppearsTransparent = true
