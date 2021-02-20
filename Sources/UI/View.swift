@@ -30,7 +30,9 @@ extension View {
 
     func _render(context: CGContext, size: CGSize) {
         if let builtin = self as? BuiltinView {
+            context.saveGState()
             builtin.render(context: context, size: size)
+            context.restoreGState()
         } else {
             body._render(context: context, size: size)
         }

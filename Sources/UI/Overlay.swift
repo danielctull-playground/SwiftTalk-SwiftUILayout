@@ -12,12 +12,10 @@ struct OverlayView<Content: View, Overlay: View>: View, BuiltinView {
     }
 
     func render(context: CGContext, size: CGSize) {
-        context.saveGState()
         content._render(context: context, size: size)
         let overlaySize = overlay._size(proposed: size)
         context.translate(for: overlaySize, in: size, alignment: alignment)
         overlay._render(context: context, size: overlaySize)
-        context.restoreGState()
     }
 
     var swiftUI: some SwiftUI.View {

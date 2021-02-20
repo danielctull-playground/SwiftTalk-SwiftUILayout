@@ -26,10 +26,8 @@ public struct Text: BuiltinView, View {
         let rect = CGRect(origin: .zero, size: size)
         let path = CGPath(rect: rect, transform: nil)
         let frame = CTFramesetterCreateFrame(framesetter, CFRange(), path, nil)
-        context.saveGState()
         context.concatenate(CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: size.height))
         CTFrameDraw(frame, context)
-        context.restoreGState()
     }
 
     public var swiftUI: some SwiftUI.View {

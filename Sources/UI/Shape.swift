@@ -35,11 +35,9 @@ public struct ShapeView<S: Shape>: BuiltinView, View {
     var color: NSColor =  .red
 
     func render(context: CGContext, size: CGSize) {
-        context.saveGState()
         context.setFillColor(color.cgColor)
         context.addPath(shape.path(in: CGRect(origin: .zero, size: size)))
         context.fillPath()
-        context.restoreGState()
     }
 
     func size(proposed: CGSize) -> CGSize {

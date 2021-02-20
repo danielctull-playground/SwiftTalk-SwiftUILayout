@@ -14,10 +14,8 @@ struct Border<Content: View>: View, BuiltinView {
 
     func render(context: CGContext, size: CGSize) {
         content._render(context: context, size: size)
-        context.saveGState()
         context.setStrokeColor(color.cgColor)
         context.stroke(CGRect(origin: .zero, size: size).insetBy(dx: width/2, dy: width/2), width: width)
-        context.restoreGState()
     }
 
     var swiftUI: some SwiftUI.View {
