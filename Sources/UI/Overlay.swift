@@ -12,8 +12,8 @@ struct OverlayView<Content: View, Overlay: View>: View, BuiltinView {
     }
 
     func render(context: CGContext, size: CGSize) {
-        content._render(context: context, size: size)
         let overlaySize = overlay._size(proposed: size)
+        content._render(context: context, size: size)
         context.translate(for: overlaySize, in: size, alignment: alignment)
         overlay._render(context: context, size: overlaySize)
     }
