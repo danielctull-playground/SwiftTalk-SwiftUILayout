@@ -112,8 +112,22 @@ enum VerticalBottom: AlignmentID {
 extension Alignment {
 
     var swiftUI: SwiftUI.Alignment {
-        SwiftUI.Alignment(horizontal: SwiftUI.HorizontalAlignment(horizontal.alignmentID),
-                          vertical: SwiftUI.VerticalAlignment(vertical.alignmentID))
+        SwiftUI.Alignment(horizontal: horizontal.swiftUI,
+                          vertical: vertical.swiftUI)
+    }
+}
+
+extension HorizontalAlignment {
+
+    var swiftUI: SwiftUI.HorizontalAlignment {
+        SwiftUI.HorizontalAlignment(alignmentID)
+    }
+}
+
+extension VerticalAlignment {
+
+    var swiftUI: SwiftUI.VerticalAlignment {
+        SwiftUI.VerticalAlignment(alignmentID)
     }
 }
 

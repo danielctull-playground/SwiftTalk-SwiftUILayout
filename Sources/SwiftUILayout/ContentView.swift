@@ -8,21 +8,28 @@ struct ContentView: SwiftUI.View {
     let size = CGSize(width: 600, height: 400)
 
     var content: some UI.View {
-        UI.Ellipse()
-            .frame(width: 150)
-            .foregroundColor(.red)
-            .frame(
-                minWidth: minWidth,
-                maxWidth: maxWidth,
-                minHeight: minHeight,
-                maxHeight: maxHeight
-            )
-            .overlay(UI.GeometryReader { proxy in
-                UI.Text("(\(proxy.size.width), \(proxy.size.height))")
-                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
-                    .background(NSColor.orange)
-            })
-            .border(.blue, width: 2)
+
+        UI.HStack(spacing: 0, content: [
+            UI.AnyView(Rectangle().frame(width: 100, height: 200).foregroundColor(.red)),
+            UI.AnyView(Rectangle().frame(width: 50, height: 50).foregroundColor(.blue))
+        ])
+
+
+//        UI.Ellipse()
+//            .frame(width: 150)
+//            .foregroundColor(.red)
+//            .frame(
+//                minWidth: minWidth,
+//                maxWidth: maxWidth,
+//                minHeight: minHeight,
+//                maxHeight: maxHeight
+//            )
+//            .overlay(UI.GeometryReader { proxy in
+//                UI.Text("(\(proxy.size.width), \(proxy.size.height))")
+//                    .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
+//                    .background(NSColor.orange)
+//            })
+//            .border(.blue, width: 2)
             .frame(width: width, height: height)
             .border(.yellow, width: 2)
     }
