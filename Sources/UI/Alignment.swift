@@ -11,6 +11,20 @@ extension CGContext {
         let y = parent.y - child.y
         translateBy(x: x, y: y)
     }
+
+    func translate(for child: CGSize, in parent: CGSize, alignment: HorizontalAlignment) {
+        let parent = alignment.alignmentID.defaultValue(in: parent)
+        let child = alignment.alignmentID.defaultValue(in: child)
+        let x = parent - child
+        translateBy(x: x, y: 0)
+    }
+
+    func translate(for child: CGSize, in parent: CGSize, alignment: VerticalAlignment) {
+        let parent = alignment.alignmentID.defaultValue(in: parent)
+        let child = alignment.alignmentID.defaultValue(in: child)
+        let y = parent - child
+        translateBy(x: 0, y: y)
+    }
 }
 
 public struct Alignment {

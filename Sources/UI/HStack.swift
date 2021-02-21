@@ -44,12 +44,13 @@ public struct HStack: View, BuiltinView {
     func render(in context: CGContext, size: CGSize) {
         let sizes = self.sizes(for: ProposedSize(size))
         var x: CGFloat = 0
-        for (content, size) in zip(content, sizes) {
+        for (content, contentSize) in zip(content, sizes) {
             context.saveGState()
+            context.translate(for: contentSize, in: size, alignment: alignment)
             context.translateBy(x: x, y: 0)
-            content.render(in: context, size: size)
+            content.render(in: context, size: contentSize)
             context.restoreGState()
-            x += size.width
+            x += contentSize.width
         }
     }
 
