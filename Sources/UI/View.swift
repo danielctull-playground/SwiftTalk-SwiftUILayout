@@ -48,6 +48,14 @@ extension CGSize {
 
 extension View {
 
+    func _size(proposed: ProposedSize) -> CGSize {
+        if let builtin = self as? BuiltinView {
+            return builtin.size(proposed: proposed)
+        } else {
+            return body._size(proposed: proposed)
+        }
+    }
+
     func _render(in context: CGContext, size: CGSize) {
         if let builtin = self as? BuiltinView {
             context.saveGState()
@@ -55,14 +63,6 @@ extension View {
             context.restoreGState()
         } else {
             body._render(in: context, size: size)
-        }
-    }
-
-    func _size(proposed: ProposedSize) -> CGSize {
-        if let builtin = self as? BuiltinView {
-            return builtin.size(proposed: proposed)
-        } else {
-            return body._size(proposed: proposed)
         }
     }
 }

@@ -17,7 +17,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                       .titled],
                           backing: .buffered,
                           defer: false)
-        window?.center()
         window?.contentView = NSHostingView(rootView: ContentView())
         window?.makeKeyAndOrderFront(nil)
         window?.titleVisibility = .hidden

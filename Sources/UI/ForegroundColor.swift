@@ -15,13 +15,13 @@ struct ForegroundColor<Content: View>: View, BuiltinView {
     var content: Content
     var color: NSColor
 
+    func size(proposed: ProposedSize) -> CGSize {
+        content._size(proposed: proposed)
+    }
+
     func render(in context: CGContext, size: CGSize) {
         context.setFillColor(color.cgColor)
         content._render(in: context, size: size)
-    }
-
-    func size(proposed: ProposedSize) -> CGSize {
-        content._size(proposed: proposed)
     }
 
     var swiftUI: some SwiftUI.View {

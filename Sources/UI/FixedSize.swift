@@ -26,10 +26,7 @@ struct FixedSize<Content: View>: View, BuiltinView {
 
 extension View {
 
-    public func fixedSize(
-        horizontal: Bool = true,
-        vertical: Bool = true
-    ) -> some View {
+    public func fixedSize(horizontal: Bool = true, vertical: Bool = true) -> some View {
         FixedSize(content: self, horizontal: horizontal, vertical: vertical)
     }
 }

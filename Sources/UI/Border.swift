@@ -4,9 +4,9 @@ import SwiftUI
 
 struct Border<Content: View>: View, BuiltinView {
 
+    let content: Content
     let color: NSColor
     let width: CGFloat
-    let content: Content
 
     func size(proposed: ProposedSize) -> CGSize {
         content._size(proposed: proposed)
@@ -28,6 +28,6 @@ struct Border<Content: View>: View, BuiltinView {
 extension View {
 
     public func border(_ color: NSColor, width: CGFloat) -> some View {
-        Border(color: color, width: width, content: self)
+        Border(content: self, color: color, width: width)
     }
 }
