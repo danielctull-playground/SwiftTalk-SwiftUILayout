@@ -9,6 +9,7 @@ struct ContentView: SwiftUI.View {
 
     var content: some UI.View {
         UI.Ellipse()
+            .foregroundColor(.red)
             .overlay(UI.GeometryReader { proxy in
                 UI.Text("(\(proxy.size.width), \(proxy.size.height))")
                     .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
