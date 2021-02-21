@@ -30,7 +30,7 @@ public struct HostingView<Content: View>: SwiftUI.View {
         SwiftUI.Image(nsImage: NSImage(data: CGContext.pdf(size: size) { context in
             content
                 .frame(width: size.width, height: size.height)
-                ._render(context: context, size: size)
+                ._render(in: context, size: size)
         })!)
     }
 }

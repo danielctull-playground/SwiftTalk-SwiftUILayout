@@ -28,13 +28,13 @@ extension Never: View {
 
 extension View {
 
-    func _render(context: CGContext, size: CGSize) {
+    func _render(in context: CGContext, size: CGSize) {
         if let builtin = self as? BuiltinView {
             context.saveGState()
-            builtin.render(context: context, size: size)
+            builtin.render(in: context, size: size)
             context.restoreGState()
         } else {
-            body._render(context: context, size: size)
+            body._render(in: context, size: size)
         }
     }
 

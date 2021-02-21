@@ -9,10 +9,10 @@ struct FixedFrame<Content: View>: View, BuiltinView {
     let alignment: Alignment
     let content: Content
 
-    func render(context: CGContext, size: CGSize) {
+    func render(in context: CGContext, size: CGSize) {
         let contentSize = content._size(proposed: size)
         context.translate(for: contentSize, in: size, alignment: alignment)
-        content._render(context: context, size: contentSize)
+        content._render(in: context, size: contentSize)
     }
 
     func size(proposed: CGSize) -> CGSize {

@@ -22,7 +22,7 @@ public struct Text: BuiltinView, View {
         CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRange(), nil, proposed, nil)
     }
 
-    func render(context: CGContext, size: CGSize) {
+    func render(in context: CGContext, size: CGSize) {
         let rect = CGRect(origin: .zero, size: size)
         let path = CGPath(rect: rect, transform: nil)
         let frame = CTFramesetterCreateFrame(framesetter, CFRange(), path, nil)

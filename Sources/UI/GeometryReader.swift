@@ -14,11 +14,11 @@ public struct GeometryReader<Content: View>: View, BuiltinView {
         proposed
     }
 
-    func render(context: CGContext, size: CGSize) {
+    func render(in context: CGContext, size: CGSize) {
         let proxy = GeometryProxy(size: size)
         let content = self.content(proxy)
         let contentSize = content._size(proposed: size)
-        content._render(context: context, size: contentSize)
+        content._render(in: context, size: contentSize)
     }
 
     public var swiftUI: some SwiftUI.View {
