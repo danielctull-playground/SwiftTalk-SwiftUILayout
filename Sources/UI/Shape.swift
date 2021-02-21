@@ -13,7 +13,7 @@ extension Shape {
 }
 
 extension NSColor: View {
-    public var body: some View { ShapeView(shape: Rectangle(), color: self) }
+    public var body: some View { ShapeView(shape: Rectangle()).foregroundColor(self) }
     public var swiftUI: some SwiftUI.View { SwiftUI.Color(self) }
 }
 
@@ -32,10 +32,8 @@ struct AnyShape: SwiftUI.Shape {
 public struct ShapeView<S: Shape>: BuiltinView, View {
     public typealias Body = Never
     var shape: S
-    var color: NSColor =  .red
 
     func render(in context: CGContext, size: CGSize) {
-        context.setFillColor(color.cgColor)
         context.addPath(shape.path(in: CGRect(origin: .zero, size: size)))
         context.fillPath()
     }
