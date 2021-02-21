@@ -8,7 +8,7 @@ struct Border<Content: View>: View, BuiltinView {
     let width: CGFloat
     let content: Content
 
-    func size(proposed: CGSize) -> CGSize {
+    func size(proposed: ProposedSize) -> CGSize {
         content._size(proposed: proposed)
     }
 

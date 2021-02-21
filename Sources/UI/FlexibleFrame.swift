@@ -26,18 +26,20 @@ struct FlexibleFrame<Content: View>: View, BuiltinView {
     let maxHeight: CGFloat?
     let alignment: Alignment
 
-    func size(proposed: CGSize) -> CGSize {
+    func size(proposed: ProposedSize) -> CGSize {
 
-        var p = proposed
+        let proposed = ProposedSize(width: proposed.width ?? idealWidth,
+                                    height: proposed.height ?? idealHeight)
+        var p = CGSize(proposed)
         p.clamping(\.width,
                    from: minWidth ?? p.width,
                    to: maxWidth ?? p.width)
         p.clamping(\.height,
                    from: minHeight ?? p.height,
                    to: maxHeight ?? p.height)
-        let contentSize = content._size(proposed: p)
+        let contentSize = content._size(proposed: ProposedSize(p))
 
-        var result = proposed
+        var result = CGSize(proposed)
         result.clamping(\.width,
                         from: minWidth ?? contentSize.width,
                         to: maxWidth ?? contentSize.width)
@@ -48,7 +50,7 @@ struct FlexibleFrame<Content: View>: View, BuiltinView {
     }
 
     func render(in context: CGContext, size: CGSize) {
-        let contentSize = content._size(proposed: size)
+        let contentSize = content._size(proposed: ProposedSize(size))
         context.translate(for: contentSize, in: size, alignment: alignment)
         content._render(in: context, size: contentSize)
     }

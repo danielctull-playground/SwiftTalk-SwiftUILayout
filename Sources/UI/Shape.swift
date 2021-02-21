@@ -40,8 +40,8 @@ public struct ShapeView<S: Shape>: BuiltinView, View {
         context.fillPath()
     }
 
-    func size(proposed: CGSize) -> CGSize {
-        proposed
+    func size(proposed: ProposedSize) -> CGSize {
+        CGSize(proposed)
     }
 
     public var swiftUI: some SwiftUI.View {

@@ -10,14 +10,14 @@ public struct GeometryReader<Content: View>: View, BuiltinView {
         self.content = content
     }
 
-    func size(proposed: CGSize) -> CGSize {
-        proposed
+    func size(proposed: ProposedSize) -> CGSize {
+        CGSize(proposed)
     }
 
     func render(in context: CGContext, size: CGSize) {
         let proxy = GeometryProxy(size: size)
         let content = self.content(proxy)
-        let contentSize = content._size(proposed: size)
+        let contentSize = content._size(proposed: ProposedSize(size))
         content._render(in: context, size: contentSize)
     }
 

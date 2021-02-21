@@ -10,13 +10,13 @@ struct FixedFrame<Content: View>: View, BuiltinView {
     let content: Content
 
     func render(in context: CGContext, size: CGSize) {
-        let contentSize = content._size(proposed: size)
+        let contentSize = content._size(proposed: ProposedSize(size))
         context.translate(for: contentSize, in: size, alignment: alignment)
         content._render(in: context, size: contentSize)
     }
 
-    func size(proposed: CGSize) -> CGSize {
-        let proposed = CGSize(width: width ?? proposed.width, height: height ?? proposed.height)
+    func size(proposed: ProposedSize) -> CGSize {
+        let proposed = ProposedSize(width: width ?? proposed.width, height: height ?? proposed.height)
         let child = content._size(proposed: proposed)
         return CGSize(width: width ?? child.width, height: height ?? child.height)
     }

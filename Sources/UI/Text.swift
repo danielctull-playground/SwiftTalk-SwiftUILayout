@@ -18,8 +18,9 @@ public struct Text: BuiltinView, View {
         return CTFramesetterCreateWithAttributedString(string)
     }
 
-    func size(proposed: CGSize) -> CGSize {
-        CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRange(), nil, proposed, nil)
+    func size(proposed: ProposedSize) -> CGSize {
+        let size = CGSize(proposed, default: .greatestFiniteMagnitude)
+        return CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRange(), nil, size, nil)
     }
 
     func render(in context: CGContext, size: CGSize) {

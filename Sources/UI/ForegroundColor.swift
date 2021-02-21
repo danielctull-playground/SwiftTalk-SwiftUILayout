@@ -20,7 +20,7 @@ struct ForegroundColor<Content: View>: View, BuiltinView {
         content._render(in: context, size: size)
     }
 
-    func size(proposed: CGSize) -> CGSize {
+    func size(proposed: ProposedSize) -> CGSize {
         content._size(proposed: proposed)
     }
 

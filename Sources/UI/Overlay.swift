@@ -7,12 +7,12 @@ struct OverlayView<Content: View, Overlay: View>: View, BuiltinView {
     let overlay: Overlay
     let alignment: Alignment
 
-    func size(proposed: CGSize) -> CGSize {
+    func size(proposed: ProposedSize) -> CGSize {
         content._size(proposed: proposed)
     }
 
     func render(in context: CGContext, size: CGSize) {
-        let overlaySize = overlay._size(proposed: size)
+        let overlaySize = overlay._size(proposed: ProposedSize(size))
         content._render(in: context, size: size)
         context.translate(for: overlaySize, in: size, alignment: alignment)
         overlay._render(in: context, size: overlaySize)

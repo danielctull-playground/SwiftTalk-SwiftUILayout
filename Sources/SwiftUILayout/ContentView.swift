@@ -9,6 +9,7 @@ struct ContentView: SwiftUI.View {
 
     var content: some UI.View {
         UI.Ellipse()
+            .fixedSize()
             .frame(width: 150)
             .foregroundColor(.red)
             .frame(

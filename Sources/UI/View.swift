@@ -26,6 +26,26 @@ extension Never: View {
     public typealias Body = Never
 }
 
+struct ProposedSize {
+    var width: CGFloat?
+    var height: CGFloat?
+}
+
+extension ProposedSize {
+
+    init(_ size: CGSize) {
+        self.init(width: size.width, height: size.height)
+    }
+}
+
+extension CGSize {
+
+    init(_ size: ProposedSize, default: CGFloat = 10) {
+        self.init(width: size.width ?? `default`,
+                  height: size.height ?? `default`)
+    }
+}
+
 extension View {
 
     func _render(in context: CGContext, size: CGSize) {
@@ -38,7 +58,7 @@ extension View {
         }
     }
 
-    func _size(proposed: CGSize) -> CGSize {
+    func _size(proposed: ProposedSize) -> CGSize {
         if let builtin = self as? BuiltinView {
             return builtin.size(proposed: proposed)
         } else {
