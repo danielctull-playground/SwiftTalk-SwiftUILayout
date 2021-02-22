@@ -3,6 +3,15 @@ import AppKit
 import SwiftUI
 import UI
 
+extension UI.View {
+
+    var measured: some UI.View {
+        overlay(UI.GeometryReader { proxy in
+            NSColor.clear.overlay(Text("\(Int(proxy.size.width))"))
+        })
+    }
+}
+
 struct ContentView: SwiftUI.View {
 
     let size = CGSize(width: 600, height: 400)
@@ -10,8 +19,8 @@ struct ContentView: SwiftUI.View {
     var content: some UI.View {
 
         UI.HStack(spacing: 0, content: [
-            UI.AnyView(Rectangle().frame(width: 100, height: 200).foregroundColor(.red)),
-            UI.AnyView(Rectangle().frame(width: 50, height: 50).foregroundColor(.blue))
+            UI.AnyView(Rectangle().frame(maxWidth: 100).foregroundColor(.red).measured),
+            UI.AnyView(Rectangle().frame(width: 50).foregroundColor(.blue).measured)
         ])
 
 

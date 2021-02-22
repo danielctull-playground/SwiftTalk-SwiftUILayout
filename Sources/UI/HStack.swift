@@ -1,6 +1,14 @@
 
 import SwiftUI
 
+@propertyWrapper
+final class LayoutState<Value> {
+    var wrappedValue: Value
+    init(wrappedValue: Value) {
+        self.wrappedValue = wrappedValue
+    }
+}
+
 public struct HStack: View, BuiltinView {
 
     public typealias Body = Never
@@ -8,6 +16,7 @@ public struct HStack: View, BuiltinView {
     let alignment: VerticalAlignment
     let spacing: CGFloat?
     let content: [AnyView]
+    @LayoutState var sizes: [CGSize] = []
 
     public init(
         alignment: VerticalAlignment = .center,
@@ -19,11 +28,11 @@ public struct HStack: View, BuiltinView {
         self.spacing = spacing
     }
 
-    func sizes(for proposed: ProposedSize) -> [CGSize] {
+    func size(proposed: ProposedSize) -> CGSize {
+        sizes = []
         var proposed = proposed
         var remainingWidth = proposed.width! // TODO
         var remainingContent = content
-        var sizes: [CGSize] = []
         while !remainingContent.isEmpty {
             proposed.width = remainingWidth / CGFloat(remainingContent.count)
             let content = remainingContent.removeFirst()
@@ -31,18 +40,12 @@ public struct HStack: View, BuiltinView {
             sizes.append(size)
             remainingWidth -= size.width
         }
-        return sizes
-    }
-
-    func size(proposed: ProposedSize) -> CGSize {
-        let sizes = self.sizes(for: proposed)
         let width = sizes.reduce(0) { $0 + $1.width }
         let height = sizes.reduce(0) { max($0, $1.height) }
         return CGSize(width: width, height: height)
     }
 
     func render(in context: CGContext, size: CGSize) {
-        let sizes = self.sizes(for: ProposedSize(size))
         var x: CGFloat = 0
         for (content, contentSize) in zip(content, sizes) {
             context.saveGState()
