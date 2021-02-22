@@ -5,15 +5,26 @@ import SwiftUI
 
 extension CGSize {
 
-    fileprivate mutating func clamping(
+    mutating func clamping(
         _ property: WritableKeyPath<CGSize, CGFloat>,
-        from minValue: CGFloat,
-        to maxValue: CGFloat
+        from minValue: CGFloat?,
+        to maxValue: CGFloat?,
+        fallback: CGFloat
     ) {
-        self[keyPath: property] = max(minValue, min(self[keyPath: property], maxValue))
+        switch (minValue, maxValue) {
+        case (.none, .none):
+            self[keyPath: property] = fallback
+        case let (.some(minValue), .some(maxValue)):
+            self[keyPath: property] = max(minValue, min(self[keyPath: property], maxValue))
+        case let (.some(minValue), .none):
+            let maxValue = max(minValue, fallback)
+            self[keyPath: property] = max(minValue, min(self[keyPath: property], maxValue))
+        case let (.none, .some(maxValue)):
+            let minValue = min(maxValue, fallback)
+            self[keyPath: property] = max(minValue, min(self[keyPath: property], maxValue))
+        }
     }
 }
-
 
 struct FlexibleFrame<Content: View>: View, BuiltinView {
 
@@ -31,21 +42,13 @@ struct FlexibleFrame<Content: View>: View, BuiltinView {
         let proposed = ProposedSize(width: proposed.width ?? idealWidth,
                                     height: proposed.height ?? idealHeight)
         var p = CGSize(proposed)
-        p.clamping(\.width,
-                   from: minWidth ?? p.width,
-                   to: maxWidth ?? p.width)
-        p.clamping(\.height,
-                   from: minHeight ?? p.height,
-                   to: maxHeight ?? p.height)
+        p.clamping(\.width, from: minWidth, to: maxWidth, fallback: p.width)
+        p.clamping(\.height, from: minHeight, to: maxHeight, fallback: p.height)
         let contentSize = content._size(proposed: ProposedSize(p))
 
         var result = CGSize(proposed)
-        result.clamping(\.width,
-                        from: minWidth ?? contentSize.width,
-                        to: maxWidth ?? contentSize.width)
-        result.clamping(\.height,
-                        from: minHeight ?? contentSize.height,
-                        to: maxHeight ?? contentSize.height)
+        result.clamping(\.width, from: minWidth, to: maxWidth, fallback: contentSize.width)
+        result.clamping(\.height, from: minHeight, to: maxHeight, fallback: contentSize.height)
         return result
     }
 
