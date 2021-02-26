@@ -9,6 +9,19 @@ final class LayoutState<Value> {
     }
 }
 
+struct LayoutInfo: Comparable {
+    let lower: CGFloat
+    let upper: CGFloat
+
+    var isFixed: Bool { lower == upper }
+
+    static func < (lhs: Self, rhs: Self) -> Bool {
+        if lhs.isFixed { return true }
+        return false
+    }
+}
+
+
 public struct HStack: View, BuiltinView {
 
     public typealias Body = Never
@@ -29,15 +42,24 @@ public struct HStack: View, BuiltinView {
     }
 
     func size(proposed: ProposedSize) -> CGSize {
-        sizes = []
+
+        let info: [LayoutInfo] = children.map { child in
+            let lower = child.size(proposed: ProposedSize(width: 0, height: proposed.height))
+            let upper = child.size(proposed: ProposedSize(width: .greatestFiniteMagnitude, height: proposed.height))
+            return LayoutInfo(lower: lower.width, upper: upper.width)
+        }
+
+        var remainingIndices = children.indices.sorted { lhs, rhs in info[lhs] < info[rhs] }
+
+        sizes = Array(repeating: .zero, count: children.count)
         var proposed = proposed
         var remainingWidth = proposed.width! // TODO
-        var remainingChildren = children
-        while !remainingChildren.isEmpty {
-            proposed.width = remainingWidth / CGFloat(remainingChildren.count)
-            let child = remainingChildren.removeFirst()
+        while !remainingIndices.isEmpty {
+            proposed.width = remainingWidth / CGFloat(remainingIndices.count)
+            let index = remainingIndices.removeFirst()
+            let child = children[index]
             let size = child.size(proposed: proposed)
-            sizes.append(size)
+            sizes[index] = size
             remainingWidth -= size.width
         }
         let width = sizes.reduce(0) { $0 + $1.width }
