@@ -9,22 +9,6 @@ final class LayoutState<Value> {
     }
 }
 
-struct LayoutInfo: Comparable {
-    let lower: CGFloat
-    let upper: CGFloat
-
-    var isFixed: Bool { lower == upper }
-    var isMax: Bool { upper != .greatestFiniteMagnitude }
-
-    static func < (lhs: Self, rhs: Self) -> Bool {
-        if lhs.isFixed { return true }
-        if rhs.isFixed { return false }
-        if lhs.isMax { return true }
-        if rhs.isMax { return false }
-        return false
-    }
-}
-
 public struct HStack: View, BuiltinView {
 
     public typealias Body = Never
@@ -46,13 +30,13 @@ public struct HStack: View, BuiltinView {
 
     func size(proposed: ProposedSize) -> CGSize {
 
-        let info: [LayoutInfo] = children.map { child in
+        let flexibility: [CGFloat] = children.map { child in
             let lower = child.size(proposed: ProposedSize(width: 0, height: proposed.height))
             let upper = child.size(proposed: ProposedSize(width: .greatestFiniteMagnitude, height: proposed.height))
-            return LayoutInfo(lower: lower.width, upper: upper.width)
+            return upper.width - lower.width
         }
 
-        var remainingIndices = children.indices.sorted { lhs, rhs in info[lhs] < info[rhs] }
+        var remainingIndices = children.indices.sorted { lhs, rhs in flexibility[lhs] < flexibility[rhs] }
 
         sizes = Array(repeating: .zero, count: children.count)
         var proposed = proposed
