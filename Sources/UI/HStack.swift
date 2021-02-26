@@ -61,6 +61,7 @@ public struct HStack: View, BuiltinView {
             let size = child.size(proposed: proposed)
             sizes[index] = size
             remainingWidth -= size.width
+            if remainingWidth < 0 { remainingWidth = 0 }
         }
         let width = sizes.reduce(0) { $0 + $1.width }
         let height = sizes.reduce(0) { max($0, $1.height) }
