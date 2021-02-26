@@ -14,13 +14,16 @@ struct LayoutInfo: Comparable {
     let upper: CGFloat
 
     var isFixed: Bool { lower == upper }
+    var isMax: Bool { upper != .greatestFiniteMagnitude }
 
     static func < (lhs: Self, rhs: Self) -> Bool {
         if lhs.isFixed { return true }
+        if rhs.isFixed { return false }
+        if lhs.isMax { return true }
+        if rhs.isMax { return false }
         return false
     }
 }
-
 
 public struct HStack: View, BuiltinView {
 

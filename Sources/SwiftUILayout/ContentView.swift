@@ -19,8 +19,8 @@ struct ContentView: SwiftUI.View {
     var content: some UI.View {
 
         UI.HStack(spacing: 0, content: [
-            UI.AnyView(Rectangle().frame(maxWidth: 100).foregroundColor(.red).measured),
-            UI.AnyView(Rectangle().frame(width: 50).foregroundColor(.blue).measured)
+            UI.AnyView(Rectangle().frame(minWidth: 150).foregroundColor(.blue).measured),
+            UI.AnyView(Rectangle().frame(maxWidth: 100).foregroundColor(.red).measured)
         ])
 
 
